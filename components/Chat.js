@@ -15,7 +15,7 @@ function Chat({id,users}) {
     const receipentEmail=getuseremail(users);
 
    
-//    const [receipentsnap]=useCollection(db.collection("users").where("email","==",getuseremail(users)));
+   const [receipentsnap]=useCollection(db.collection("users").where("email","==",getuseremail(users)));
       db.collection("users").onSnapshot(snapshot=>(
         //   setEmail(snapshot.docs.map(doc=>doc.data().email===getuseremail(users)))
         snapshot.docs.map(doc=>doc.data().email===receipentEmail?setEmail(doc.data().photoURL):"")
