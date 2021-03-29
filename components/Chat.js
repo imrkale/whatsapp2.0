@@ -1,18 +1,20 @@
 import React,{useState,useEffect} from 'react'
 import {Avatar} from '@material-ui/core'
 import styled from 'styled-components'
-import {useCollection} from 'react-firebase-hooks/firestore'
-
+import {useRouter} from 'next/router'
+import {getReceipt} from '../pages/getReceipent'
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {auth,db} from '../firebase'
+
 function Chat({id,users}) {
   
     const [user]=useAuthState(auth);
+    const route = useRouter();
     const [email,setEmail]=useState();
-    const getuseremail=(users)=>(
-        users?.filter(username=>username !== user?.email)[0]
-    )
-    const receipentEmail=getuseremail(users);
+    // const getuseremail=(users)=>(
+    //     users?.filter(username=>username !== user?.email)[0]
+    // )
+    const receipentEmail=getReceipt(users);
 
    
 //    const [receipentsnap]=useCollection(db.collection("users").where("email","==",getuseremail(users)));
@@ -25,7 +27,7 @@ function Chat({id,users}) {
         
    console.log(email);
     return (
-        <Container>
+        <Container onClick={()=>route.push(`chat/${id}`)}>
             {
                 email?(
                     <UserAvatar src={email}/>   
